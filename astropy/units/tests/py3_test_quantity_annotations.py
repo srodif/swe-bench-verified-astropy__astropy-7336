@@ -285,3 +285,18 @@ def test_return_annotation():
     assert solarx.unit is u.deg
     """
     return src
+
+
+@py3only  
+def test_return_annotation_none():
+    src = """
+    class TestClass:
+        @u.quantity_input
+        def __init__(self, voltage: u.V) -> None:
+            self.voltage = voltage
+
+    # This should not raise an AttributeError
+    test_obj = TestClass(1.0 * u.V)
+    assert test_obj.voltage.unit == u.V
+    """
+    return src
